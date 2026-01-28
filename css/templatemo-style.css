@@ -584,7 +584,90 @@ a:hover, a:active, a:focus {
   padding-right: 10px;
 }
 
+/*---------------------------------------
+   CV section              
+-----------------------------------------*/
+#cv {
+    background-color: #000000;
+    padding: 100px 0;
+    color: #ffffff;
+}
 
+.cv-flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cv-content-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.cv-column {
+    flex: 1;
+    min-width: 350px;
+}
+
+.cv-card {
+    background: #0a0a0a; 
+    padding: 30px;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    height: 100%; 
+}
+
+.cv-item {
+    margin-bottom: 20px;
+}
+
+.cv-item h4 {
+    color: #ffffff;
+    margin-bottom: 2px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.cv-item small {
+    color: #E3AE57;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.cv-item p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #bbb;
+}
+
+.ref-item {
+    margin-bottom: 15px;
+}
+
+.ref-item h4 {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.ref-item p {
+    font-style: italic;
+    font-size: 13px;
+    color: #888;
+}
+
+.cv-card h3 i {
+    margin-right: 10px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .cv-content-row {
+        flex-direction: column;
+    }
+}
 
 /*---------------------------------------
    References section              
