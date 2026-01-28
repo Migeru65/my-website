@@ -356,7 +356,7 @@ a:hover, a:active, a:focus {
 }
 
 #home .home-img {
-  background: url('..img/home-img.jpg') no-repeat;
+  background: url('../img/home-img.jpg') no-repeat;
   background-size: cover;
   background-position: 50% 50%;
   width: 100%;
@@ -383,7 +383,7 @@ a:hover, a:active, a:focus {
 -----------------------------------------*/
 
 #about .about-img {
-    background: url('..img/about-img.jpg') no-repeat;
+    background: url('../img/about-img.jpg') no-repeat;
 }
 
 #about .about-thumb,
@@ -440,7 +440,7 @@ a:hover, a:active, a:focus {
 -----------------------------------------*/
 
 #experience .experience-img {
-  background: url('..img/experience-img.jpg') no-repeat;
+  background: url('../img/experience-img.jpg') no-repeat;
 }
 
 #experience .media-heading {
@@ -466,7 +466,7 @@ a:hover, a:active, a:focus {
 }
 
 #education .education-img {
-  background: url('..img/education-img.jpg') no-repeat;
+  background: url('../img/education-img.jpg') no-repeat;
 }
 
 #education .media-heading {
@@ -490,7 +490,7 @@ a:hover, a:active, a:focus {
 -----------------------------------------*/
 
 #works {
-    background: url('..img/works-bg.jpg') 50% 0 repeat-y fixed;
+    background: url('../img/works-bg.jpg') 50% 0 repeat-y fixed;
     background-size: cover;
     background-position: center center;
     color: #ffffff;
@@ -533,7 +533,7 @@ a:hover, a:active, a:focus {
 }
 
 #contact .contact-img {
-  background: url('..img/contact-img.jpg') no-repeat;
+  background: url('../img/contact-img.jpg') no-repeat;
   min-height: 75vh;
 }
 
