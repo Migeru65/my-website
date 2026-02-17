@@ -856,3 +856,21 @@ footer .social-icon {
     justify-content: center;
     align-items: flex-start; 
 }
+
+/*---------------------------------------
+   Clock         
+-----------------------------------------*/
+/* Compact the navbar links to fit in the right-half layout */
+@media (min-width: 992px) {
+    .custom-navbar .nav li a {
+        font-size: 13px;       /* Slightly smaller text */
+        padding-left: 10px;    /* Reduce side padding (was ~15px) */
+        padding-right: 10px;
+    }
+    
+    /* Ensure the container behaves correctly with our new row */
+    .custom-navbar .container {
+        width: 100%;           /* Use full width to align perfectly with the split screen */
+        max-width: 1170px;     /* Keep standard max-width constraint */
+    }
+}

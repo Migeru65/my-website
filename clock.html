@@ -1,98 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dynamic Clock and Greeting</title>
+    <title>Dynamic Clock</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet">
     <style>
-        /* Use CSS to make the clock look nice (fonts, colors, borders, background) [cite: 163] */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Source Sans Pro', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #282c34;
-            color: white;
-            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            background-color: transparent; 
+            overflow: hidden;
         }
         
         #clock-container {
-            border: 5px solid #61dafb;
-            padding: 20px;
-            border-radius: 15px;
-            background-color: #20232a;
-            box-shadow: 0 0 20px rgba(97, 218, 251, 0.5);
+            /* BRAND MATCHING: Dark Charcoal Background */
+            background-color: #232B2B; 
+            
+            /* BRAND MATCHING: Gold Border */
+            border: 2px solid #E3AE57; 
+            
+            padding: 5px 10px;
+            border-radius: 6px; 
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 130px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+        }
+
+        #greeting {
+            font-size: 10px;
+            color: #ffffff; 
+            margin-bottom: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         #clock {
-            font-size: 60px;
-            font-weight: bold;
-            letter-spacing: 5px;
-            color: #61dafb;
+            font-size: 18px;
+            font-weight: 700;
+            /* BRAND MATCHING: Gold Time Display */
+            color: #E3AE57; 
+            line-height: 1.1;
+            margin-bottom: 2px;
         }
 
         #date-display {
-            font-size: 24px;
-            margin-top: 10px;
-            color: #abb2bf;
+            font-size: 10px;
+            color: #bbbbbb; 
+            font-weight: 300;
+            line-height: 1;
         }
     </style>
 </head>
 <body>
 
     <div id="clock-container">
+        <div id="greeting"></div>
         <div id="clock">Loading...</div>
         <div id="date-display"></div>
     </div>
 
-    <script>
-        // Breakdown: Check current time when page loads [cite: 156]
-        function greetUser() {
-            let now = new Date(); // [cite: 169]
-            let hour = now.getHours(); // [cite: 170]
-            let greeting = "";
-
-            // Logic based on the hour to display appropriate greeting 
-            if (hour >= 5 && hour < 12) {
-                greeting = "Good Morning!"; // [cite: 158]
-            } else if (hour >= 12 && hour < 18) {
-                greeting = "Good Afternoon!"; // [cite: 159]
-            } else if (hour >= 18 && hour < 22) {
-                greeting = "Good Evening!"; // [cite: 160]
-            } else {
-                greeting = "Good Night!"; // [cite: 161]
-            }
-
-            // Use appropriate dialog boxes for wishing the user [cite: 154]
-            alert(greeting);
-        }
-
-        // Display a live digital clock that updates every second 
-        function startClock() {
-            setInterval(() => {
-                let now = new Date();
-                
-                // Format time as HH:MM:SS
-                let timeString = now.toLocaleTimeString();
-                
-                // Format date as Day, Month Date, Year
-                let dateString = now.toLocaleDateString(undefined, { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                });
-
-                document.getElementById("clock").innerText = timeString;
-                document.getElementById("date-display").innerText = dateString;
-            }, 1000); // Updates every 1000ms (1 second)
-        }
-
-        // Run the greeting and start the clock when the script loads
-        // Using setTimeout for the alert ensures the background renders first in some browsers
-        setTimeout(greetUser, 100);
-        startClock();
-
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
