@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Bouncing Ball</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        #court {
+            width: 600px;
+            height: 400px;
+            background-color: #333;
+            border: 2px solid #555;
+            position: relative; /* Needed for absolute positioning of the ball */
+            overflow: hidden;
+        }
+
+        #ball {
+            width: 40px;
+            height: 40px;
+            background-color: #ffcc00; /* Tennis ball color */
+            border-radius: 50%;
+            position: absolute;
+            /* Start position */
+            top: 20px;
+            left: 20px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .controls {
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Physics Bouncing Ball</h1>
+    
+    <div id="court">
+        <div id="ball"></div>
+    </div>
+
+    <div class="controls">
+        <button onclick="resetBall()">Throw Ball Again</button>
+    </div>
+
+    <script>
+        const ball = document.getElementById("ball");
+        const court = document.getElementById("court");
+
+        // --- Configuration ---
+        const ballSize = 40;
+        const courtWidth = 600;
+        const courtHeight = 400;
+
+        // --- Physics Variables ---
+        let x = 20;       // Horizontal Position
+        let y = 20;       // Vertical Position
+        let vx = 5;       // Horizontal Velocity (Speed)
+        let vy = 0;       // Vertical Velocity
+        
+        // "Gravity" adds to vertical velocity every frame
+        const gravity = 0.8; 
+        
+        // "Friction" reduces speed when hitting walls/floor (0.8 = 80% energy kept)
+        const friction = 0.8; 
+
+        // --- The Animation Loop ---
+        setInterval(() => {
+            // 1. Apply Physics
+            vy += gravity; // Gravity pulls the ball down (increases Y speed)
+            
+            x += vx; // Move horizontally
+            y += vy; // Move vertically
+
+            // 2. Floor Collision (Bounce)
+            // If ball hits the bottom...
+            if (y + ballSize > courtHeight) {
+                y = courtHeight - ballSize; // Reset position so it doesn't get stuck
+                vy *= -friction; // Reverse direction and lose some energy
+            }
+
+            // 3. Wall Collision
+            // If ball hits Right wall
+            if (x + ballSize > courtWidth) {
+                x = courtWidth - ballSize;
+                vx *= -friction; // Reverse horizontal direction
+            }
+            // If ball hits Left wall
+            else if (x < 0) {
+                x = 0;
+                vx *= -friction;
+            }
+
+            // 4. Ceiling Collision
+            if (y < 0) {
+                y = 0;
+                vy *= -friction;
+            }
+
+            // 5. Update HTML Element
+            ball.style.left = x + "px";
+            ball.style.top = y + "px";
+
+        }, 20); // Updates every 20ms (50 frames per second)
+
+        // Function to reset the ball to top-left with random speed
+        function resetBall() {
+            x = 20;
+            y = 20;
+            vx = Math.random() * 10 + 2; // Random speed between 2 and 12
+            vy = 0;
+        }
+    </script>
+
+</body>
+</html>

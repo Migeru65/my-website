@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Element Position</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        #container {
+            height: 300px;
+            border: 1px solid #ccc;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: #61dafb;
+            border: 2px solid #282c34;
+            /* Placing the box somewhere specific to test coordinates */
+            position: absolute;
+            top: 50px;
+            left: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .output {
+            background: #f4f4f4;
+            padding: 10px;
+            border-left: 4px solid #61dafb;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Element Position Demo</h2>
+    <p>Click the button to get the coordinates of the blue box.</p>
+
+    <div id="container">
+        <div id="box">I am here</div>
+    </div>
+
+    <button onclick="getBoxPosition()">Get Box Position</button>
+
+    <div id="output" class="output">
+        Coordinates will appear here...
+    </div>
+
+    <script>
+        function getBoxPosition() {
+            // 1. Select the element
+            let box = document.getElementById("box");
+
+            // 2. Get the position object
+            // getBoundingClientRect returns the size and position relative to the viewport
+            let position = box.getBoundingClientRect();
+
+            // 3. Log to console as requested
+            console.log("Left:", position.left, "Top:", position.top);
+
+            // 4. Display on screen for user visibility
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                <strong>Console Log Generated:</strong><br>
+                Left (X): ${position.left}px <br>
+                Top (Y): ${position.top}px <br>
+                Width: ${position.width}px <br>
+                Height: ${position.height}px
+            `;
+        }
+    </script>
+
+</body>
+</html>
