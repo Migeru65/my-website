@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Modern gradient background */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;     /* Center vertically */
+        }
+
+        /* Form Container (Card Style) */
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;     /* Rounded corners */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Soft shadow for depth */
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Heading Styling */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Input Fields Styling */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensures padding doesn't widen the element */
+            font-size: 14px;
+        }
+
+        /* Focus effect for inputs */
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #764ba2;
+            outline: none;
+        }
+
+        /* Button Styling */
+        input[type="button"], input[type="reset"] {
+            width: 48%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Specific Button Colors */
+        input[type="button"] {
+            background-color: #667eea;
+            color: white;
+            float: left;
+        }
+
+        input[type="button"]:hover {
+            background-color: #5a6fd6;
+        }
+
+        input[type="reset"] {
+            background-color: #ff6b6b;
+            color: white;
+            float: right;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #ee5253;
+        }
+
+        /* Labels */
+        label {
+            float: left;
+            font-weight: bold;
+            color: #555;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Clearfix to fix float issues */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+
+    <script language="javascript">
+        /* function to check userid & password */
+        function check(form) {
+            /* the following code checks whether the entered userid and password are matching */
+            if(form.userid.value == "12314374" && form.pswrd.value == "password") {
+                /* opens the target page while Id & password matches */
+                window.open("https://migeru65.github.io/my-website/", "_blank");
+            } else {
+                /* displays error message */
+                alert("Error Password or Username");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Validate Credentials</h1>
+        <form name="login">
+            <label>Username</label>
+            <input type="text" name="userid" placeholder="Enter myuserid" />
+            
+            <label>Password</label>
+            <input type="password" name="pswrd" placeholder="Enter mypswrd" />
+            
+            <div class="clearfix">
+                <input type="button" onclick="check(this.form)" value="Login" />
+                <input type="reset" value="Cancel" />
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
