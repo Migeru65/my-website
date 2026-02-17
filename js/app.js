@@ -7,13 +7,13 @@ function greetUser() {
 
     // Logic to determine the greeting text
     if (hour >= 5 && hour < 12) {
-        greeting = "Good Morning Guest!"; //
+        greeting = "Good Morning Guest!"; 
     } else if (hour >= 12 && hour < 18) {
-        greeting = "Good Afternoon Guest!"; //
+        greeting = "Good Afternoon Guest!"; 
     } else if (hour >= 18 && hour < 22) {
-        greeting = "Good Evening Guest!"; //
+        greeting = "Good Evening Guest!"; 
     } else {
-        greeting = "Good Night! Guest"; //
+        greeting = "Good Night Guest!"; 
     }
     
     // 1. Update the visual text on the clock widget
@@ -23,7 +23,6 @@ function greetUser() {
     }
 
     // 2. Trigger the pop-up dialog box (Alert)
-    // Using setTimeout ensures the background loads slightly before the alert pops up
     setTimeout(function() {
         alert(greeting);
     }, 100);
@@ -33,14 +32,12 @@ function startClock() {
     setInterval(() => {
         let now = new Date();
         
-        // Time format including seconds
         let timeString = now.toLocaleTimeString([], {
             hour: '2-digit', 
             minute:'2-digit', 
             second:"2-digit"
         });
         
-        // Date format
         let dateString = now.toLocaleDateString(undefined, { 
             weekday: 'short', 
             month: 'short', 
@@ -55,37 +52,39 @@ function startClock() {
     }, 1000); 
 }
 
-// Run the greeting logic (which includes the alert)
-greetUser();
+/* =========================================
+   FIX: ONLY RUN CLOCK LOGIC IF CLOCK EXISTS
+   ========================================= */
+// We check if "clock-container" exists. If it does, we are inside the iframe.
+// If it doesn't, we are on the main index page and should skip this.
+if (document.getElementById("clock-container")) {
+    greetUser();
+    startClock();
+}
 
-// Start the ticking clock
-startClock();
 
-// Select the form element using the ID we just added
+/* =========================================
+   FORM LOGIC (Safe to keep here)
+   ========================================= */
 const contactForm = document.getElementById('portfolio-contact-form');
 
-// Check if the form exists on the page to avoid errors
+// This check prevents errors inside the clock iframe (where the form doesn't exist)
 if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
         
-        // 1. Prevent the default page reload/navigation
         event.preventDefault();
 
-        // 2. Retrieve values from the input fields
         const nameValue = document.getElementById('fullname').value;
         const emailValue = document.getElementById('email').value;
         const messageValue = document.getElementById('message').value;
 
-        // 3. Print the values to the browser console
         console.log("--- New Contact Form Submission ---");
         console.log("Name: " + nameValue);
         console.log("Email: " + emailValue);
         console.log("Message: " + messageValue);
 
-        // Optional: Alert the user so they know it worked
         alert("Thank you, " + nameValue + "! Your message has been logged to the console.");
         
-        // Optional: Clear the form fields
         contactForm.reset();
     });
 }
