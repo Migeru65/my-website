@@ -7,13 +7,13 @@ function greetUser() {
 
     // Logic to determine the greeting text
     if (hour >= 5 && hour < 12) {
-        greeting = "Good Morning!"; //
+        greeting = "Good Morning Guest!"; //
     } else if (hour >= 12 && hour < 18) {
-        greeting = "Good Afternoon!"; //
+        greeting = "Good Afternoon Guest!"; //
     } else if (hour >= 18 && hour < 22) {
-        greeting = "Good Evening!"; //
+        greeting = "Good Evening Guest!"; //
     } else {
-        greeting = "Good Night!"; //
+        greeting = "Good Night! Guest"; //
     }
     
     // 1. Update the visual text on the clock widget
