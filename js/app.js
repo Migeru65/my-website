@@ -1,7 +1,7 @@
 console.log("Website loaded successfully.");
 
 /* =========================================
-   CLOCK WIDGET LOGIC
+   1. CLOCK WIDGET LOGIC
    ========================================= */
 function greetUser() {
     let now = new Date(); 
@@ -22,11 +22,6 @@ function greetUser() {
     if (greetingElement) {
         greetingElement.innerText = greeting;
     }
-
-    if (document.getElementById("greeting")) {
-         setTimeout(function() {
-        }, 100);
-    }
 }
 
 function startClock() {
@@ -43,6 +38,7 @@ function startClock() {
     }, 1000); 
 }
 
+// Only run clock logic if the clock container exists (in the iframe)
 if (document.getElementById("clock-container")) {
     greetUser();
     startClock();
@@ -50,21 +46,101 @@ if (document.getElementById("clock-container")) {
 
 
 /* =========================================
-   PART B: ENHANCED FORM INTEGRATION
+   2. BOUNCING BALL PHYSICS ENGINE
    ========================================= */
+const ball = document.getElementById("ball");
+const court = document.getElementById("court");
+const toggleBtn = document.getElementById("toggle-ball-btn");
+const resetBtn = document.getElementById("reset-ball-btn");
+const ballWrapper = document.getElementById("ball-wrapper");
 
+let animationInterval = null;
+let x = 20;       
+let y = 20;       
+let vx = 5;       
+let vy = 0;       
+const gravity = 0.8; 
+const friction = 0.8; 
+const ballSize = 40;
+
+function updatePhysics() {
+    // Dynamically get court size for responsiveness
+    const courtWidth = court.clientWidth;
+    const courtHeight = court.clientHeight;
+
+    // 1. Apply Physics
+    vy += gravity; 
+    x += vx; 
+    y += vy; 
+
+    // 2. Floor Collision 
+    if (y + ballSize > courtHeight) {
+        y = courtHeight - ballSize; 
+        vy *= -friction; 
+        
+        // Stop micro-bouncing when near rest
+        if (Math.abs(vy) < 1.5) vy = 0;
+    }
+
+    // 3. Wall Collision
+    if (x + ballSize > courtWidth) {
+        x = courtWidth - ballSize;
+        vx *= -friction; 
+    } else if (x < 0) {
+        x = 0;
+        vx *= -friction;
+    }
+
+    // 4. Ceiling Collision
+    if (y < 0) {
+        y = 0;
+        vy *= -friction;
+    }
+
+    // 5. Update DOM
+    ball.style.left = x + "px";
+    ball.style.top = y + "px";
+}
+
+function resetBall() {
+    x = 20;
+    y = 20;
+    vx = Math.random() * 10 + 5; // Random horizontal speed
+    vy = 0;
+}
+
+if (toggleBtn) {
+    toggleBtn.addEventListener("click", function() {
+        if (ballWrapper.style.display === "none") {
+            // SHOW Animation
+            ballWrapper.style.display = "block";
+            toggleBtn.innerText = "Close Demo";
+            resetBall(); // Reset position on open
+            animationInterval = setInterval(updatePhysics, 20); // Start Loop
+        } else {
+            // HIDE Animation
+            ballWrapper.style.display = "none";
+            toggleBtn.innerText = "Play Physics Demo";
+            clearInterval(animationInterval); // Stop Loop to save resources
+        }
+    });
+}
+
+if (resetBtn) {
+    resetBtn.addEventListener("click", resetBall);
+}
+
+
+/* =========================================
+   3. ENHANCED FORM VALIDATION
+   ========================================= */
 const formLoadTime = Date.now(); 
-
 let submitTimes = []; 
-
 const contactForm = document.getElementById('portfolio-contact-form');
 
 if (contactForm) {
-
-    // --- Helper Functions ---
-
     function showInputError(input, message) {
-        const errorSmall = input.nextElementSibling; 
+        const errorSmall = input.nextElementSibling;
         if (errorSmall) {
             errorSmall.innerText = message;
             errorSmall.style.display = 'block';
@@ -76,7 +152,7 @@ if (contactForm) {
         const errorSmall = input.nextElementSibling;
         if (errorSmall) {
             errorSmall.style.display = 'none';
-            input.style.borderColor = '#ccc'; 
+            input.style.borderColor = '#E3AE57'; // Restore theme color
         }
     }
 
@@ -86,31 +162,14 @@ if (contactForm) {
     }
 
     function containsSpam(message) {
-        const spamWords = ["free money", "buy now", "click here", "subscribe", "promo", "win big", "urgent"];
-        const lowerMessage = message.toLowerCase();
-        return spamWords.some(word => lowerMessage.includes(word));
+        const spamWords = ["free money", "buy now", "click here", "subscribe", "promo", "win big"];
+        return spamWords.some(word => message.toLowerCase().includes(word));
     }
 
-    function isRateLimited() {
-        const now = Date.now();
-        submitTimes = submitTimes.filter(time => now - time < 60000);
-        if (submitTimes.length >= 3) {
-            return true;
-        }
-        submitTimes.push(now);
-        return false;
-    }
-
-    function isTooFast() {
-        const submitTime = Date.now();
-        const secondsTaken = (submitTime - formLoadTime) / 1000;
-        return secondsTaken < 2;
-    }
-
+    // Input Event Listeners for Real-time feedback
     const inputs = contactForm.querySelectorAll('input, textarea');
     inputs.forEach(input => {
         input.addEventListener('input', () => clearInputError(input));
-        
         input.addEventListener('blur', () => {
             if (input.hasAttribute('required') && !input.value.trim()) {
                 showInputError(input, "This field is required.");
@@ -120,60 +179,41 @@ if (contactForm) {
         });
     });
 
-    // --- Form Submission Handler ---
     contactForm.addEventListener('submit', function(event) {
-        
-        const feedback = document.getElementById('form-feedback');
-        feedback.style.display = 'none';
-        feedback.className = 'text-center'; 
-        
         let isValid = true;
         const nameInput = document.getElementById('fullname');
         const emailInput = document.getElementById('email');
         const messageInput = document.getElementById('message');
 
+        // Validation Checks
         if (!nameInput.value.trim()) {
             showInputError(nameInput, "Name is required.");
             isValid = false;
         }
 
         if (!isValidEmail(emailInput.value)) {
-            showInputError(emailInput, "Please enter a valid email address.");
+            showInputError(emailInput, "Invalid email.");
             isValid = false;
         }
 
         if (!messageInput.value.trim()) {
             showInputError(messageInput, "Message is required.");
             isValid = false;
-        } else if (messageInput.value.length < 10) {
-            showInputError(messageInput, "Message must be at least 10 characters.");
+        } else if (containsSpam(messageInput.value)) {
+            showInputError(messageInput, "Message contains spam terms.");
+            isValid = false;
+        }
+
+        // Time-based security (Bot check)
+        if ((Date.now() - formLoadTime) < 2000) {
+            alert("Submission too fast.");
             isValid = false;
         }
 
         if (!isValid) {
-            event.preventDefault(); 
-            return;
-        }
-
-        if (isTooFast()) { 
             event.preventDefault();
-            alert("Submission was too fast. Please try again.");
-            return;
+        } else {
+            console.log("Form valid. Submitting...");
         }
-
-        if (isRateLimited()) { 
-            event.preventDefault();
-            alert("Too many submissions. Please wait a minute.");
-            return;
-        }
-
-        if (containsSpam(messageInput.value)) { 
-            event.preventDefault();
-            alert("Your message contains blocked spam keywords.");
-            showInputError(messageInput, "Message contains spam keywords.");
-            return;
-        }
-
-        console.log("Validation passed. Submitting form...");
     });
 }
