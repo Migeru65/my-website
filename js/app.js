@@ -144,6 +144,7 @@ if (contactForm) {
         if (errorSmall) {
             errorSmall.innerText = message;
             errorSmall.style.display = 'block';
+            errorSmall.style.color = '#ffffff';
             input.style.borderColor = 'red';
         }
     }
